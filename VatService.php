@@ -10,6 +10,11 @@
  *
  * @author mirjana
  */
+
+use \SoapClient;
+use \Exception;
+use \SoapFault;
+
 class VatService
 {
     //put your code here
@@ -61,9 +66,14 @@ class VatService
 
         $param = array("vatNumber" => $this->vatNumber, "countryCode" =>$this->countryCode);
 
-        $response = $client->__soapCall("checkVat", $param);
-
-        return $response;
+        try {
+            $response = $client->CheckVat($param);
+        } catch (SoapFault $e){
+            echo $e->getMessage();
+        }
+var_dump($response);die();
+        return new Response("h");
+       // return $response;
 
 
     }
